@@ -1,0 +1,23 @@
+def posicao_valida (frota, linha, coluna, orientacao, tamanho):
+
+    novas_posicoes = define_posicoes (linha, coluna, orientacao, tamanho)       #novas_posições armazena as posições definidas pelo jogador, é uma lista de listas com dois valores
+    
+    #agora eu quero percorrer todas as coordenadas dessa lista e ver se tem alguma igual
+    
+    for navio in frota:
+        for posicao in frota[navio]:
+            for coordenada in posicao:
+                for i in range (len(novas_posicoes)):
+                    if novas_posicoes[i] == coordenada:
+                        return False
+
+    #agora vou conferir se está dentro dos limites do tabuleiro
+    
+    for i in range(len(novas_posicoes)):
+
+        if novas_posicoes[i][0] >=10:
+            return False
+        elif novas_posicoes[i][1] >=10:
+            return False
+    
+    return True
