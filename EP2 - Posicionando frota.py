@@ -99,3 +99,14 @@ for nome_navio in embarcacao:      # vai dar o nome_navio do navio
                 orientacao = "horizontal"
         if nome_navio == "submarino":
             orientacao = "horizontal" #escolha arbitrária
+            
+        #vai verificar se a posicao é valida
+        
+        if posicao_valida (frota, linha, coluna, orientacao, tamanho) == True:
+            
+            frota = preenche_frota(frota, nome_navio, linha, coluna, orientacao, tamanho)
+            
+        elif posicao_valida (frota, linha, coluna, orientacao, tamanho) == False:
+            print ("Esta posição não está válida!")
+            
+        
