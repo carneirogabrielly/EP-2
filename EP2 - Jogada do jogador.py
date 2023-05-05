@@ -185,14 +185,8 @@ while jogando:
         if [linha, coluna] not in lista_posicoes:
             lista_posicoes.append([linha, coluna])
             tabuleiro_oponente = faz_jogada(tabuleiro_oponente, linha, coluna)
-            valida_posicao = False
+            
         else:
             print(f'A posição linha {linha} e coluna {coluna} já foi informada anteriormente!')
     # verifica se o jogador afundou toda a frota do oponente
-    if afundados(frota, tabuleiro_jogador) == 0:
 
-        print('Parabéns! Você derrubou todos os navios do seu oponente!')
-        
-        break
-
-# print(lista_posicoes)
