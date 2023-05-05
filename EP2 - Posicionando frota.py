@@ -31,22 +31,15 @@ for nome_navio in embarcacao:      # vai dar o nome_navio do navio
         
         if posicao_valida (frota, linha, coluna, orientacao, tamanho) == True:
             
-            
             #vai atualizar a frota
             
             frota = preenche_frota(frota, nome_navio, linha, coluna, orientacao, tamanho)
-            # preenche_frota(frota, nome_navio, linha, coluna, orientacao, tamanho)
-            
-            i +=1
-            # if coluna == tamanho and i <= qtd:
-            #     break
-            #print(frota)
-            
 
+            i +=1
+            
         elif posicao_valida (frota, linha, coluna, orientacao, tamanho) == False:
             
             print ("Esta posição não está válida!")
             
-# print(frota)
 print(frota)
 
