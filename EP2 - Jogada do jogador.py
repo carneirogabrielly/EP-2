@@ -33,16 +33,13 @@ def posiciona_frota(frota):
     return tabuleiro
 
 def afundados (frota, tabuleiro):
-    print(frota)
-    print(tabuleiro)
     navios_afundados = 0
-    for navio in frota:            #navio é cada chave, representa o tipo de embarcação
-        for posicao in frota[navio]:        # Posição é a lista com as listas = value, posição é como se fosse de fato cada navio daquele tipo
-            afundou = True
-            for coordenada in posicao:   #coordenada é cada lista dentro de cada posicao, ou seja, é a lista com as coordenadas
+    for navio in frota:
+        for posicao in frota[navio]:
+            for coordenada in posicao:
                 if tabuleiro[coordenada[0]][coordenada[1]] != 'X':
-                    afundou = False
-            
+                    break
+            else:
                 navios_afundados += 1
     return navios_afundados
 
@@ -202,9 +199,21 @@ while jogando:
         #primeiro vou ter que contar quantos navios o oponente tinha
         #ja fiz isso antes do inicio do loop, ta armazenado em quantidade_navios
         
-        if afundados(frota_oponente, tabuleiro_oponente) == quantidade_navios:
+        
+        navios_afundados = afundados(frota_oponente, tabuleiro_oponente)
+        if navios_afundados == quantidade_navios:
+            print(navios_afundados)
+            print(quantidade_navios)
+
             valida_posicao = False
             print('Parabéns! Você derrubou todos os navios do seu oponente!')
             jogando = False
-            
+            break
+
+        # else:
+        #     # valida_posicao = True
+        #     print(monta_tabuleiros(tabuleiro_jogador, tabuleiro_oponente))
+        #     print('Ainda não foi dessa vez! Continue tentando!')
+        #     print(navios_afundados)
+        #     print(quantidade_navios)
             
