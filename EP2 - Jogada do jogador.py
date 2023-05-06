@@ -164,9 +164,11 @@ while jogando:
 
     # verifica se a  posição é valida
     
+    
     valida_posicao = True
     
     while valida_posicao:
+        print(monta_tabuleiros(tabuleiro_jogador, tabuleiro_oponente)) 
         linha = int(input("Qual a linha desejada para atacar? "))
         if linha > 9 or linha < 0:
             print("Linha inválida")
@@ -190,7 +192,8 @@ while jogando:
         if [linha, coluna] not in posicoes_atacadas:
             posicoes_atacadas.append([linha, coluna])
             #atualiza o tabulei do oponente
-            tabuleiro_oponente = faz_jogada(tabuleiro_oponente, linha, coluna)  
+            tabuleiro_oponente = faz_jogada(tabuleiro_oponente, linha, coluna) 
+
         else:
             print(f'A posição linha {linha} e coluna {coluna} já foi informada anteriormente!')
             
@@ -202,18 +205,6 @@ while jogando:
         
         navios_afundados = afundados(frota_oponente, tabuleiro_oponente)
         if navios_afundados == quantidade_navios:
-            print(navios_afundados)
-            print(quantidade_navios)
-
-            valida_posicao = False
             print('Parabéns! Você derrubou todos os navios do seu oponente!')
+            valida_posicao = False
             jogando = False
-            break
-
-        # else:
-        #     # valida_posicao = True
-        #     print(monta_tabuleiros(tabuleiro_jogador, tabuleiro_oponente))
-        #     print('Ainda não foi dessa vez! Continue tentando!')
-        #     print(navios_afundados)
-        #     print(quantidade_navios)
-            
