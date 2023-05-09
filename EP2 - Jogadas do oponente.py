@@ -1,5 +1,5 @@
 import random
-
+random.seed(2)
 
 def define_posicoes(linha, coluna, orientacao, tamanho):
     posicoes = []
@@ -243,6 +243,7 @@ while jogando:
             navios_afundados_jogador = afundados(frota, tabuleiro_jogador)
             if navios_afundados_jogador == quantidade_navios_jogador:
                 print('Xi! O oponente derrubou toda a sua frota =(')
+                valida_posicao = False
                 jogando = False
             
 
