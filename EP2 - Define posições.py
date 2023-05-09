@@ -6,12 +6,6 @@
 
 # 3. função retorna uma lista com as posições que o navio irá ocupar
 
-
-# linha = 2
-# coluna = 4
-# orientacao = "vertical"
-# tamanho = 3
-
 def define_posicoes (linha, coluna, orientacao, tamanho):
     posicoes = []
     if orientacao == "vertical":

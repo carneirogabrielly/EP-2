@@ -1,5 +1,9 @@
+#bibliotecas utilizadas
 import random
 
+#funções utilizadas:
+
+#função que recebe as informações de onde posicionar o navio e devolve as posições que ele irá ocupar
 def define_posicoes(linha, coluna, orientacao, tamanho):
     posicoes = []
     if orientacao == "vertical":
@@ -10,6 +14,7 @@ def define_posicoes(linha, coluna, orientacao, tamanho):
             posicoes.append([linha, coluna + i])
     return posicoes
 
+#função que preenche o dicionario frota com as posições ocupadas por cada navio
 def preenche_frota(frota, nome_navio, linha, coluna, orientacao, tamanho):
     if nome_navio in frota:    
         frota[nome_navio] += ([define_posicoes(linha, coluna, orientacao, tamanho)])
@@ -17,6 +22,7 @@ def preenche_frota(frota, nome_navio, linha, coluna, orientacao, tamanho):
         frota[nome_navio] = [define_posicoes(linha, coluna, orientacao, tamanho)]
     return frota
 
+#função que muda o símbolo do tabuleiro depois de cada jogada
 def faz_jogada(tabuleiro, linha, coluna):
     if tabuleiro[linha][coluna] == 0:
         tabuleiro [linha][coluna] = '-'
@@ -24,6 +30,7 @@ def faz_jogada(tabuleiro, linha, coluna):
         tabuleiro[linha][coluna] = 'X'
     return tabuleiro
 
+#função que posiciona os navios da frota no tabuleiro
 def posiciona_frota(frota):
     tabuleiro = []
     for i in range(10):
@@ -34,6 +41,7 @@ def posiciona_frota(frota):
                 tabuleiro[coordenada[0]][coordenada[1]] = 1
     return tabuleiro
 
+#funcão que contabiliza quantos navios ja foram afundados
 def afundados (frota, tabuleiro):
     navios_afundados = 0
     for navio in frota:
@@ -45,6 +53,7 @@ def afundados (frota, tabuleiro):
                 navios_afundados += 1
     return navios_afundados
 
+#função que verifica se a posição é válida
 def posicao_valida (frota, linha, coluna, orientacao, tamanho):
 
     novas_posicoes = define_posicoes (linha, coluna, orientacao, tamanho)       #novas_posições armazena as posições definidas pelo jogador, é uma lista de listas com dois valores
@@ -66,9 +75,13 @@ def posicao_valida (frota, linha, coluna, orientacao, tamanho):
             return False
 
     return True
+
+#---------- INÍCIO DO JOGO ----------#
     
+#cria o dicionario vazio frota
 frota = {}
 
+#cria o dicionario com a quantidade de cada embarcação e o tamanho delas
 embarcacao = {   #primeiro termo da lista é o tamanho, o segundo é a quantidade de vezes que ele aparece
     "porta-aviões": [4,1],
     "navio-tanque": [3,2],
@@ -76,6 +89,7 @@ embarcacao = {   #primeiro termo da lista é o tamanho, o segundo é a quantidad
     "submarino": [1,4],
 }
 
+#vai perguntar para o jogador onde ele quer colocar cada tipo de navio
 for nome_navio in embarcacao:      # vai dar o nome_navio do navio
     tamanho = embarcacao[nome_navio][0]
     qtd = embarcacao[nome_navio][1]
@@ -100,18 +114,12 @@ for nome_navio in embarcacao:      # vai dar o nome_navio do navio
         
         if posicao_valida (frota, linha, coluna, orientacao, tamanho) == True:
             
-            
             #vai atualizar a frota
             
             frota = preenche_frota(frota, nome_navio, linha, coluna, orientacao, tamanho)
-            # preenche_frota(frota, nome_navio, linha, coluna, orientacao, tamanho)
             
             i +=1
-            # if coluna == tamanho and i <= qtd:
-            #     break
-            #print(frota)
-            
-
+        
         elif posicao_valida (frota, linha, coluna, orientacao, tamanho) == False:
             
             print ("Esta posição não está válida!")
@@ -155,6 +163,9 @@ for navio in frota:
 #posicionando as frotas de jogador e oponente 
 tabuleiro_oponente = posiciona_frota(frota_oponente)
 tabuleiro_jogador = posiciona_frota(frota)
+
+
+#LAÇO DO JOGO
 
 jogando = True
 
@@ -228,20 +239,23 @@ while jogando:
             
             sortear_linha = random.randint(0,9)
             sortear_coluna = random.randint(0,9)
-
+            
+            #Se a posição já foi atacada ele vai continuar sorteando
             while [sortear_linha, sortear_coluna] in posicoes_oponente_atacou:
                 sortear_linha = random.randint(0,9)
                 sortear_coluna = random.randint(0,9)
 
+            #se a posição nao foi atacada ele ataca e atualiza o tabuleiro do jogador
             if [sortear_linha, sortear_coluna] not in posicoes_oponente_atacou:
                 posicoes_oponente_atacou.append([sortear_linha, sortear_coluna])
                 #atualiza o tabuleiro do jogador
                 tabuleiro_jogador = faz_jogada(tabuleiro_jogador, sortear_linha, sortear_coluna)
                 print(f'Seu oponente está atacando na linha {sortear_linha} e coluna {sortear_coluna}')
 
+            #verifica se o oponente já atacou todos os navios
             navios_afundados_jogador = afundados(frota, tabuleiro_jogador)
             if navios_afundados_jogador == quantidade_navios_jogador:
                 print('Xi! O oponente derrubou toda a sua frota =(')
                 valida_posicao = False
-                jogando = False
+                jogando = False  
             
