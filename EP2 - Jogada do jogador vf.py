@@ -33,16 +33,13 @@ def posiciona_frota(frota):
     return tabuleiro
 
 def afundados (frota, tabuleiro):
-    print(frota)
-    print(tabuleiro)
     navios_afundados = 0
-    for navio in frota:            #navio é cada chave, representa o tipo de embarcação
-        for posicao in frota[navio]:        # Posição é a lista com as listas = value, posição é como se fosse de fato cada navio daquele tipo
-            afundou = True
-            for coordenada in posicao:   #coordenada é cada lista dentro de cada posicao, ou seja, é a lista com as coordenadas
+    for navio in frota:
+        for posicao in frota[navio]:
+            for coordenada in posicao:
                 if tabuleiro[coordenada[0]][coordenada[1]] != 'X':
-                    afundou = False
-            
+                    break
+            else:
                 navios_afundados += 1
     return navios_afundados
 
@@ -117,7 +114,7 @@ for nome_navio in embarcacao:      # vai dar o nome_navio do navio
             
             print ("Esta posição não está válida!")
             
-          
+#criando a frota do oponente      
 frota_oponente = {
     'porta-aviões': [
         [[9, 1], [9, 2], [9, 3], [9, 4]]
@@ -146,7 +143,7 @@ for navio in frota_oponente:
         for posicao in frota_oponente[navio]:
             quantidade_navios += 1
         
-
+#posicionando as frotas de jogador e oponente 
 tabuleiro_oponente = posiciona_frota(frota_oponente)
 tabuleiro_jogador = posiciona_frota(frota)
 
@@ -154,6 +151,7 @@ jogando = True
 
 while jogando:
     
+    #monta tabuleiros
     def monta_tabuleiros(tabuleiro_jogador, tabuleiro_oponente):
         texto = ''
         texto += '   0  1  2  3  4  5  6  7  8  9         0  1  2  3  4  5  6  7  8  9\n'
@@ -174,6 +172,7 @@ while jogando:
     valida_posicao = True
     
     while valida_posicao:
+        print(monta_tabuleiros(tabuleiro_jogador, tabuleiro_oponente)) 
         linha = int(input("Qual a linha desejada para atacar? "))
         if linha > 9 or linha < 0:
             print("Linha inválida")
@@ -196,19 +195,19 @@ while jogando:
         
         if [linha, coluna] not in posicoes_atacadas:
             posicoes_atacadas.append([linha, coluna])
-            #atualiza o tabulei do oponente
-            tabuleiro_oponente = faz_jogada(tabuleiro_oponente, linha, coluna)  
+            #atualiza o tabuleiro do oponente
+            tabuleiro_oponente = faz_jogada(tabuleiro_oponente, linha, coluna) 
+
         else:
             print(f'A posição linha {linha} e coluna {coluna} já foi informada anteriormente!')
             
         #verifica se a frota do oponente já foi toda afundada: se não foi vai continuar validando posição, se foi vai acabar o jogo
         
-        #primeiro vou ter que contar quantos navios o oponente tinha
-        #ja fiz isso antes do inicio do loop, ta armazenado em quantidade_navios
+        #ja contei quantos navios o oponente tinha, ta armazenado em quantidade_navios
+        #se a quantidade de navios afundados foi igual a quantidade de navios, acaba o jogo
         
-        if afundados(frota_oponente, tabuleiro_oponente) == quantidade_navios:
-            valida_posicao = False
+        navios_afundados = afundados(frota_oponente, tabuleiro_oponente)
+        if navios_afundados == quantidade_navios:
             print('Parabéns! Você derrubou todos os navios do seu oponente!')
+            valida_posicao = False
             jogando = False
-            
-            
